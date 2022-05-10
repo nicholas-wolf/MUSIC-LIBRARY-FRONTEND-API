@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import axios from 'axios';
 import BasicTable from "./Components/MusicTable/MusicTable";
+import AddSong from "./Components/AddSong/AddSong";
+
+
 
 
 
@@ -24,8 +27,11 @@ function App() {
 
   return (
 
-          <div>                                         
-          <BasicTable parentEntries={songs}/>                
+          <div> 
+            <AddSong>
+              await getAllSongs();
+            </AddSong>
+            <BasicTable parentEntries={songs}/>                
           </div> 
   );
 }

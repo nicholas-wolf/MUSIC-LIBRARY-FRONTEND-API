@@ -37,7 +37,7 @@ export default function BasicTable(props) {
               </TableCell>
               <TableCell align="right">{row.artist}</TableCell>
               <TableCell align="right">{row.album}</TableCell>
-              <TableCell align="right">{row.releaseDate}</TableCell>
+              <TableCell align="right">{row.release_date}</TableCell>
               <TableCell align="right">{row.genre}</TableCell>
             </TableRow>
           ))}
