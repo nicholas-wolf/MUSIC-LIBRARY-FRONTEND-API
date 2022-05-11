@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, {useState} from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -6,14 +6,26 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import { Button } from '@mui/material';
+import axios from 'axios';
+import BasicModal from '../UpdateSong/UpdateSong';
 
+export default function BasicTable({songs, setCheck}) {
+    
+    
+    function DeleteSong (id){
+        let address = 'http://localhost:8000/api/music/'+ id + '/'
+        axios({
+            method: 'delete',
+            url: address
+          }).then(response =>{
+            if(response.status === 204){
+                setCheck(true)
+            }
+          })      
+    }
+    
 
-
-
-
-
-
-export default function BasicTable(props) {
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -27,9 +39,9 @@ export default function BasicTable(props) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {props.parentEntries.map((row) => (
+          {songs.map((row) => (
             <TableRow
-              key={row.name}
+              key={row.id}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
               <TableCell component="th" scope="row">
@@ -39,6 +51,27 @@ export default function BasicTable(props) {
               <TableCell align="right">{row.album}</TableCell>
               <TableCell align="right">{row.release_date}</TableCell>
               <TableCell align="right">{row.genre}</TableCell>
+              <td>
+                <div>
+                    <Button
+                        size="extra small"
+                        style={{maxHeight:'20px'}}
+                        variant='contained'
+                        color='primary'
+                        onClick={() => DeleteSong(row.id)}>
+                            Delete</Button>
+                    <BasicModal 
+                        setCheck={setCheck}
+                        rowId={row.id}
+                        rowTitle={row.title}
+                        rowArtist={row.artist}
+                        rowAlbum={row.album}
+                        rowReleaseDate={row.release_date}
+                        rowGenre={row.genre}
+                        
+                    />
+                </div>  
+            </td> 
             </TableRow>
           ))}
         </TableBody>
